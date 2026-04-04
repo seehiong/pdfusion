@@ -1,5 +1,4 @@
 # PDFusion - Comprehensive .gitignore
-# Generated for React + TypeScript + Python + Appwrite project
 
 # ===================================
 # Environment & Secrets
@@ -14,9 +13,6 @@
 # API Keys and sensitive data
 *.key
 *.pem
-service-account.json
-google-credentials.json
-appwrite-config.json
 
 # ===================================
 # Node.js / React Frontend
@@ -208,20 +204,6 @@ dmypy.json
 .pyre/
 
 # ===================================
-# Appwrite Functions
-# ===================================
-appwrite-functions/*/node_modules/
-appwrite-functions/*/.env
-appwrite-functions/*/build/
-appwrite-functions/*/dist/
-appwrite-functions/*/__pycache__/
-appwrite-functions/*/*.pyc
-
-# Function deployment artifacts
-.appwrite/
-appwrite-function.tar.gz
-
-# ===================================
 # PDF Processing & Media Files
 # ===================================
 # Temporary processing files
@@ -257,6 +239,8 @@ vision-api-cache/
 # Database dumps
 *.sql
 *.dump
+# Keep the setup file
+!server/setup_db.sql
 
 # ===================================
 # IDEs & Editors
@@ -446,6 +430,9 @@ public/workbox-*
 # ===================================
 # PDFusion specific temporary files
 /uploads/
+/outputs/
+server/uploads/
+server/outputs/
 /processing/
 /cache/
 pdfsion-temp/

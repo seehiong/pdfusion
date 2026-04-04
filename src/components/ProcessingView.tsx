@@ -1,9 +1,7 @@
 
 import React from 'react';
 import Card from './common/Card';
-import Spinner from './common/Spinner';
-import { FileText, LogOut, User } from './icons';
-import { useAuth } from '../contexts/AuthContext';
+import { FileText } from './icons';
 
 interface ProcessingViewProps {
   message: string;
@@ -11,12 +9,6 @@ interface ProcessingViewProps {
 }
 
 const ProcessingView: React.FC<ProcessingViewProps> = ({ message, step }) => {
-  const { user, logout } = useAuth();
-
-  const handleLogout = async () => {
-    await logout();
-  };
-
   // Different content based on processing step
   const getStepContent = () => {
     if (step === 'upload') {
@@ -69,20 +61,6 @@ const ProcessingView: React.FC<ProcessingViewProps> = ({ message, step }) => {
                 </h1>
               </div>
             </div>
-            <div className="flex items-center space-x-4">
-              <div className="flex items-center space-x-2 text-slate-700">
-                <User className="w-4 h-4" />
-                <span className="text-sm font-medium">Welcome, {user?.name}</span>
-              </div>
-              <button
-                onClick={handleLogout}
-                className="flex items-center space-x-2 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 transform hover:scale-105 shadow-md hover:shadow-lg"
-                title="Logout from your account"
-              >
-                <LogOut className="w-4 h-4" />
-                <span>Logout</span>
-              </button>
-            </div>
           </div>
         </div>
       </nav>
@@ -127,16 +105,14 @@ const ProcessingView: React.FC<ProcessingViewProps> = ({ message, step }) => {
                 <div className="space-y-2 text-left">
                   {content.steps.map((step, index) => (
                     <div key={index} className="flex items-center space-x-3 text-sm">
-                      <div className={`w-2 h-2 rounded-full ${
-                        step.status === 'completed' ? 'bg-green-500' :
-                        step.status === 'current' ? 'bg-blue-500 animate-pulse' :
-                        'bg-slate-300'
-                      }`}></div>
-                      <span className={`${
-                        step.status === 'completed' ? 'text-slate-600' :
-                        step.status === 'current' ? 'text-slate-900 font-medium' :
-                        'text-slate-400'
-                      }`}>{step.text}</span>
+                      <div className={`w-2 h-2 rounded-full ${step.status === 'completed' ? 'bg-green-500' :
+                          step.status === 'current' ? 'bg-blue-500 animate-pulse' :
+                            'bg-slate-300'
+                        }`}></div>
+                      <span className={`${step.status === 'completed' ? 'text-slate-600' :
+                          step.status === 'current' ? 'text-slate-900 font-medium' :
+                            'text-slate-400'
+                        }`}>{step.text}</span>
                     </div>
                   ))}
                 </div>

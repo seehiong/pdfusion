@@ -1,12 +1,16 @@
 import React, { useState, useCallback } from 'react';
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
+import 'katex/dist/katex.min.css';
 import type { Document } from '../types/types';
 import Card from './common/Card';
 import Button from './common/Button';
 import Tabs from './common/Tabs';
 import SectionHeader from './common/SectionHeader';
-import { Clipboard, Image, Table, RefreshCw, Eye, CheckCircle, LogOut, User, FileText } from './icons';
-import { useAuth } from '../contexts/AuthContext';
+import { Clipboard, RefreshCw, Eye, CheckCircle, FileText } from './icons';
+import { api } from '../services/api';
 
 interface ResultsViewProps {
   document: Document;
@@ -14,14 +18,9 @@ interface ResultsViewProps {
 }
 
 const ResultsView: React.FC<ResultsViewProps> = ({ document, onReset }) => {
-  const { user, logout } = useAuth();
   const [activeTab, setActiveTab] = useState('markdown');
   const [copied, setCopied] = useState(false);
   const [modalImage, setModalImage] = useState<string | null>(null);
-
-  const handleLogout = async () => {
-    await logout();
-  };
 
   const handleCopyToClipboard = useCallback(() => {
     if (document.markdownContent) {
@@ -52,20 +51,6 @@ const ResultsView: React.FC<ResultsViewProps> = ({ document, onReset }) => {
                   PDFusion
                 </h1>
               </div>
-            </div>
-            <div className="flex items-center space-x-4">
-              <div className="flex items-center space-x-2 text-slate-700">
-                <User className="w-4 h-4" />
-                <span className="text-sm font-medium">Welcome, {user?.name}</span>
-              </div>
-              <button
-                onClick={handleLogout}
-                className="flex items-center space-x-2 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 transform hover:scale-105 shadow-md hover:shadow-lg"
-                title="Logout from your account"
-              >
-                <LogOut className="w-4 h-4" />
-                <span>Logout</span>
-              </button>
             </div>
           </div>
         </div>
@@ -115,8 +100,19 @@ const ResultsView: React.FC<ResultsViewProps> = ({ document, onReset }) => {
 
                 {/* Content Display */}
                 <div className="bg-white/80 backdrop-blur-sm rounded-xl border border-slate-200 shadow-sm">
-                  <div className="p-6 h-[65vh] overflow-y-auto prose prose-slate max-w-none">
-                    <ReactMarkdown>{document.markdownContent || 'No markdown content available.'}</ReactMarkdown>
+                  <div className="p-6 h-[65vh] overflow-y-auto prose prose-slate max-w-none prose-img:rounded-xl prose-img:shadow-md prose-tables:border-collapse prose-th:bg-slate-100 prose-td:border-b">
+                    <ReactMarkdown
+                      remarkPlugins={[remarkGfm, remarkMath]}
+                      rehypePlugins={[rehypeKatex]}
+                      components={{
+                        img: ({ node, ...props }) => {
+                          const src = props.src ? api.getStaticUrl(props.src) : '';
+                          return <img {...props} src={src} alt={props.alt || ''} className="max-w-full h-auto rounded-lg shadow-sm border border-slate-200" />;
+                        }
+                      }}
+                    >
+                      {document.markdownContent || 'No markdown content available.'}
+                    </ReactMarkdown>
                   </div>
                 </div>
               </div>

@@ -1,0 +1,13 @@
+fastapi
+uvicorn
+sqlalchemy
+psycopg2-binary
+python-multipart
+litellm
+pymupdf
+pydantic
+python-dotenv
+aiofiles
+pandas
+openpyxl
+Pillow
