@@ -1,3 +1,4 @@
+// src/components/icons.tsx
 
 import {
   UploadCloud,
@@ -15,6 +16,10 @@ import {
   Clock,
   LogOut,
   User,
+  Settings,
+  Sun,
+  Moon,
+  ArrowLeft,
 } from 'lucide-react';
 
 export {
@@ -33,4 +38,11 @@ export {
   Clock,
   LogOut,
   User,
+  Settings,
+  Sun,
+  Moon,
+  ArrowLeft,
 };
+
+
+

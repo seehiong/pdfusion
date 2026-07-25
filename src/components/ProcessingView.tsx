@@ -1,3 +1,4 @@
+// src/components/ProcessingView.tsx
 
 import React from 'react';
 import Card from './common/Card';
@@ -46,9 +47,9 @@ const ProcessingView: React.FC<ProcessingViewProps> = ({ message, step }) => {
   const content = getStepContent();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-300">
       {/* Navigation Bar - Always Visible */}
-      <nav className="bg-white/80 backdrop-blur-lg shadow-lg border-b border-white/20">
+      <nav className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-lg shadow-lg border-b border-white/20 dark:border-slate-800/80">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             <div className="flex items-center">
@@ -56,7 +57,7 @@ const ProcessingView: React.FC<ProcessingViewProps> = ({ message, step }) => {
                 <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center">
                   <FileText className="w-5 h-5 text-white" />
                 </div>
-                <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-indigo-400 dark:to-purple-400 bg-clip-text text-transparent">
                   PDFusion
                 </h1>
               </div>
@@ -66,7 +67,7 @@ const ProcessingView: React.FC<ProcessingViewProps> = ({ message, step }) => {
       </nav>
 
       <div className="flex items-center justify-center min-h-[calc(100vh-4rem)]">
-        <div className="max-w-md w-full">
+        <div className="max-w-md w-full px-4">
           <Card className="shadow-2xl">
             <div className="p-8 text-center">
               {/* Header */}
@@ -79,39 +80,39 @@ const ProcessingView: React.FC<ProcessingViewProps> = ({ message, step }) => {
               {/* Content */}
               <div className="space-y-6">
                 <div>
-                  <h2 className="text-3xl font-bold text-slate-900 mb-2">{content.title}</h2>
-                  <p className="text-slate-600 text-lg">{message || 'Initializing processing...'}</p>
+                  <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-100 mb-2">{content.title}</h2>
+                  <p className="text-slate-600 dark:text-slate-400 text-lg">{message || 'Initializing processing...'}</p>
                 </div>
 
                 {/* Spinner */}
                 <div className="flex justify-center">
                   <div className="w-16 h-16">
-                    <div className="w-full h-full border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin shadow-lg"></div>
+                    <div className="w-full h-full border-4 border-blue-200 dark:border-slate-800 border-t-blue-600 dark:border-t-indigo-500 rounded-full animate-spin shadow-lg"></div>
                   </div>
                 </div>
 
                 {/* Progress Bar */}
                 <div className="space-y-3">
-                  <div className="w-full bg-slate-200 rounded-full h-3 shadow-inner">
+                  <div className="w-full bg-slate-200 dark:bg-slate-800 rounded-full h-3 shadow-inner">
                     <div
                       className="bg-gradient-to-r from-blue-500 to-indigo-500 h-3 rounded-full animate-pulse shadow-sm"
                       style={{ width: step === 'upload' ? '30%' : '60%' }}
                     ></div>
                   </div>
-                  <p className="text-slate-500 font-medium">{content.progressText}</p>
+                  <p className="text-slate-500 dark:text-slate-400 font-medium">{content.progressText}</p>
                 </div>
 
                 {/* Processing Steps */}
-                <div className="space-y-2 text-left">
+                <div className="space-y-2 text-left bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl border border-slate-100 dark:border-slate-800/50">
                   {content.steps.map((step, index) => (
                     <div key={index} className="flex items-center space-x-3 text-sm">
-                      <div className={`w-2 h-2 rounded-full ${step.status === 'completed' ? 'bg-green-500' :
-                          step.status === 'current' ? 'bg-blue-500 animate-pulse' :
-                            'bg-slate-300'
+                      <div className={`w-2 h-2 rounded-full ${step.status === 'completed' ? 'bg-green-500 dark:bg-emerald-500' :
+                        step.status === 'current' ? 'bg-blue-500 dark:bg-indigo-400 animate-pulse' :
+                          'bg-slate-300 dark:bg-slate-700'
                         }`}></div>
-                      <span className={`${step.status === 'completed' ? 'text-slate-600' :
-                          step.status === 'current' ? 'text-slate-900 font-medium' :
-                            'text-slate-400'
+                      <span className={`${step.status === 'completed' ? 'text-slate-500 dark:text-slate-400' :
+                        step.status === 'current' ? 'text-slate-900 dark:text-slate-100 font-semibold' :
+                          'text-slate-400 dark:text-slate-600'
                         }`}>{step.text}</span>
                     </div>
                   ))}

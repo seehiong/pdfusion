@@ -1,3 +1,4 @@
+// src/types/types.ts
 
 export enum DocumentStatus {
   PENDING = 'pending',
@@ -28,4 +29,16 @@ export interface Document {
   extractedImages?: ExtractedImage[];
   extractedTables?: ExtractedTable[];
   errorMessage?: string;
+  ocrMode?: 'fast' | 'vision';
+  createdAt?: number;
 }
+
+export interface DBImage {
+  id: string;
+  documentId: string;
+  dataUrl: string;
+  pageNumber: number;
+  ocrText: string;
+  caption: string;
+}
+

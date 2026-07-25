@@ -1,3 +1,4 @@
+// src/components/common/Spinner.tsx
 
 import React from 'react';
 
