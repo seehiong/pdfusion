@@ -16,9 +16,9 @@ const App: React.FC = () => {
   return (
     <Router basename={import.meta.env.BASE_URL} {...routerOptions}>
       <Routes>
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/" element={<Navigate to="/dashboard" />} />
-        <Route path="*" element={<Navigate to="/dashboard" />} />
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/dashboard" element={<Navigate to="/" replace />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>
   );
